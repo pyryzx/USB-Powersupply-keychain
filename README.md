@@ -1,13 +1,13 @@
 # Multi-Rail Power Supply Keychain (USB-C PD)
 
-A compact, keychain-sized **USB-C powered** power supply that exposes four rails for quick prototyping and testing:
+A compact, keychain-sized **USB-C powered** power supply that has four power rails:
 
 - **+1.8 V** (up to 1.5 A)
 - **+3.3 V** (up to 1.5 A)
 - **+5 V** (up to 1.5 A)
 - **+12 V (VBUS passthrough)** from the USB-C PD source
 
-The idea is simple: clip this onto your keys, plug it into a USB-C PD charger, and you’ve got the most common lab voltages available from a single tiny board.
+Clip this onto your keys, plug it into a USB-C PD charger, and you’ve got the most common lab voltages available from a single tiny board.
 
 ---
 
@@ -17,7 +17,7 @@ The idea is simple: clip this onto your keys, plug it into a USB-C PD charger, a
 - Multi-rail DC/DC conversion to generate **1.8 V, 3.3 V, and 5 V**
 - **12 V VBUS rail is also available** as an output (source-dependent)
 - Compact PCB with **keychain hole**
-- Clearly labeled outputs for quick hookup
+
 
 ---
 
@@ -34,9 +34,9 @@ The idea is simple: clip this onto your keys, plug it into a USB-C PD charger, a
 | +5V | 5.0 V | 1.5 A | Buck regulated |
 | +12V | 12 V | Source-dependent | Direct from negotiated VBUS |
 
-### Power Budget (important)
+### Power Budget 
 
-Even if each rail is “rated” for 1.5 A, you cannot exceed what your USB-C supply negotiates.
+beware that even if each rail is “rated” for 1.5 A it is source dependent. 
 
 Example (typical PD): **12 V × 3 A = 36 W available**  
 Loads:
@@ -45,15 +45,8 @@ Loads:
 - 1.8 V @ 1.5 A ≈ 2.7 W  
 Total ≈ 15.2 W (plus conversion losses)
 
-So running all three regulated rails at 1.5 A can be realistic, **but** if you also pull significant current from **+12 V**, you’ll hit the PD limit fast.
+Beware that current design is not yet optimized to be run at full capacity all the time. Heat generated is still a problem when run at max load.
 
-### Thermal Reality
-
-This board is tiny. Sustained high current = heat.
-- If you plan to draw near-maximum current continuously, measure temperature (IR thermometer / thermal cam / careful touch) and consider airflow.
-- Inductors and the power IC will be your main hot spots.
-
----
 
 ## Output Connector / Pinout
 
@@ -67,11 +60,9 @@ Pin order (as labeled on schematic / silkscreen intent):
 4. **+12V**
 5. **GND**
 
-> Always connect **GND** first. Don’t hot-plug sensitive loads if you can avoid it.
-
 ---
 
-## How It Works (High Level)
+## How It Works 
 
 1. **USB-C input** comes in on the Type-C receptacle.
 2. A **USB-C PD sink controller (CYPD3177-24LQ)** negotiates with the charger to request **12 V** output.
@@ -99,6 +90,6 @@ See: `schematic_keychain V2.pdf`. :contentReference[oaicite:1]{index=1}
 - Not a charger / power bank
 - Not safety-certified equipment
 - Not intended for life-critical, medical, automotive, or mains-related applications
-- Not meant for inductive loads / motors directly (use proper power staging)
+- Not meant for inductive loads / motors directly 
 
 ---
